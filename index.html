@@ -24,9 +24,6 @@
             --shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
             --cloud: #4e73df;
             --sports: #ff6b6b;
-            --trip: #4ecdc4;
-            --festival: #ff9f1c;
-            --activity: #9b5de5;
         }
 
         body {
@@ -488,21 +485,6 @@
             border-color: var(--sports);
             color: var(--sports);
         }
-        
-        .moments-filter-btn[data-category="trip"] {
-            border-color: var(--trip);
-            color: var(--trip);
-        }
-        
-        .moments-filter-btn[data-category="festival"] {
-            border-color: var(--festival);
-            color: var(--festival);
-        }
-        
-        .moments-filter-btn[data-category="activity"] {
-            border-color: var(--activity);
-            color: var(--activity);
-        }
 
         .moments-filter-btn.active, .moments-filter-btn:hover {
             background: var(--accent);
@@ -512,24 +494,6 @@
         .moments-filter-btn[data-category="sports"].active, 
         .moments-filter-btn[data-category="sports"]:hover {
             background: var(--sports);
-            color: white;
-        }
-        
-        .moments-filter-btn[data-category="trip"].active, 
-        .moments-filter-btn[data-category="trip"]:hover {
-            background: var(--trip);
-            color: white;
-        }
-        
-        .moments-filter-btn[data-category="festival"].active, 
-        .moments-filter-btn[data-category="festival"]:hover {
-            background: var(--festival);
-            color: white;
-        }
-        
-        .moments-filter-btn[data-category="activity"].active, 
-        .moments-filter-btn[data-category="activity"]:hover {
-            background: var(--activity);
             color: white;
         }
 
@@ -565,6 +529,18 @@
 
         .album-card:hover .album-cover {
             transform: scale(1.05);
+        }
+        
+        .video-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(230, 57, 70, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
 
         .album-info {
@@ -653,14 +629,14 @@
             border-left: 4px solid var(--accent);
         }
 
-        /* 相册详情页照片网格 */
-        .photo-gallery {
+        /* 相册详情页媒体网格 */
+        .media-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 15px;
         }
 
-        .photo-card {
+        .media-card {
             position: relative;
             border-radius: 8px;
             overflow: hidden;
@@ -668,19 +644,21 @@
             aspect-ratio: 4/3;
         }
 
-        .photo-img {
+        .media-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.3s ease;
+        }
+        
+        .video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
-        .photo-card:hover .photo-img {
-            transform: scale(1.05);
-        }
-
-        .photo-info {
+        .media-info {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -694,8 +672,25 @@
             justify-content: center;
         }
 
-        .photo-card:hover .photo-info {
+        .media-card:hover .media-info {
             transform: translateY(0);
+        }
+        
+        .video-play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        
+        .media-card:hover .video-play-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
         }
 
         .download-btn {
@@ -715,7 +710,7 @@
         .download-btn:hover {
             background: var(--secondary);
         }
-
+        
         /* 响应式设计 */
         @media (max-width: 768px) {
             .nav-links {
@@ -761,7 +756,7 @@
                 align-items: center;
             }
             
-            .photo-gallery {
+            .media-gallery {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
         }
@@ -791,12 +786,55 @@
         .footer-content a:hover {
             text-decoration: underline;
         }
+        
+        /* 视频模态框 */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .modal-video {
+            width: 100%;
+            height: 450px;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .modal-video {
+                height: 300px;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <h1>2023届9班</h1>
+            <h1>澜石中学2023届9班</h1>
             <div class="class-info">九班最强，斗志昂扬；保持桂冠，永不言败。</div>
             <nav>
                 <ul class="nav-links">
@@ -824,7 +862,7 @@
                         <i class="fas fa-images"></i>
                     </div>
                     <h3 class="feature-title">精彩瞬间</h3>
-                    <p class="feature-desc">浏览班级活动精彩照片，重温共同经历的美好时光。</p>
+                    <p class="feature-desc">浏览班级活动精彩照片和视频，重温共同经历的美好时光。</p>
                 </div>
                 
                 <div class="feature-card">
@@ -863,18 +901,18 @@
                     <a href="https://drive.google.com/drive/folders/1wRuT35uq6QvbKud3uF-wuVIYJUGk9KUO?usp=sharing" class="download-link">
                         <i class="fab fa-google-drive"></i> Google 网盘
                     </a>
-                    <a href=" https://pan.baidu.com/s/1_YFJ1ZNwyTfWH6N_Opes7Q?pwd=8888 " class="download-link">
+                    <a href="https://pan.baidu.com/s/1lSs9qKgI_l_MBpHkUO5AKw?pwd=0809 " class="download-link">
                         <i class="fab fa-baidu"></i> 百度网盘
                     </a>
-                    <a href="#" class="download-link">
-                        <i class="fas fa-download"></i> 直接下载(暂无)
+                    <a href="班级照片.zip" class="download-link">
+                        <i class="fas fa-download"></i> 直接下载
                     </a>
                 </div>
                 
                 <div class="download-meta">
                     <span><i class="fas fa-file-archive"></i> ZIP格式压缩包</span>
-                    <span><i class="fas fa-database"></i> 约 700MB</span>
-                    <span><i class="fas fa-images"></i> 包含400+高清照片</span>
+                    <span><i class="fas fa-database"></i> 约 450MB</span>
+                    <span><i class="fas fa-images"></i> 包含100+高清照片</span>
                 </div>
             </div>
             
@@ -909,8 +947,8 @@
                 这里是相册的详细描述，记录了活动的点点滴滴和美好回忆。
             </div>
             
-            <div class="photo-gallery" id="album-photos">
-                <!-- 相册内的照片会动态生成 -->
+            <div class="media-gallery" id="album-media">
+                <!-- 相册内的媒体会动态生成 -->
             </div>
         </section>
 
@@ -931,7 +969,7 @@
                         <th>姓名</th>
                         <th>学号</th>
                         <th>电话</th>
-                        <th>联系方式</th>
+                        <th>邮箱</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -942,9 +980,20 @@
         </section>
     </main>
 
+    <!-- 视频模态框 -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <video class="modal-video" controls id="modalVideo">
+                <source src="" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-content">
-            <p>© 2025 2023届9班 班级网站 | 设计制作：饶启烨</p>
+            <p>© 2025 2023届9班 班级网站 | 代码技术编程：饶启烨 | 通讯录收集：黄子健</p>
             <p>班级邮箱：<a href="mailto:raoroger380@gmail.com">raoroger380@gmail.com</a> | 班主任：陈老师 | 摄影师：陈老师</p>
         </div>
     </footer>
@@ -968,7 +1017,7 @@
             });
         });
 
-        // 通讯录数据 (修正学号问题)
+        // 通讯录数据
         const contacts = [
             { id: 1, name: "陈祖名", studentId: "1", phone: "17317538671", email: "x" },
             { id: 2, name: "邓嘉麒", studentId: "2", phone: "x", email: "x" },
@@ -1023,77 +1072,85 @@
             { id: 51, name: "曾嘉丽", studentId: "51", phone: "x", email: "x" }
         ];
         
-        // 精彩瞬间相册集数据 (修正封面图片问题)
+        // 精彩瞬间相册集数据 - 仅在篮球相册中添加视频
         const momentsAlbums = [
             {
                 id: 1,
-                title: "2023冬季运动会",
-                cover: "SportCompition/IMG_20231201_154026.jpg",
-                date: "2023年12月1日",
-                category: "sports",
-                description: "记录2023年冬季运动会的精彩瞬间，同学们在运动场上挥洒汗水，展现了团结拼搏的精神。",
-                photos: [
-                    "SportCompition/mmexport1749893946051.jpg",
-                    "SportCompition/mmexport1749893932629.jpg",
-                    "SportCompition/mmexport1749893916868.jpg",
-                    "SportCompition/mmexport1749893111528.jpg"
-                ]
-            },
-			{
-                id: 2,
                 title: "班级篮球赛",
                 cover: "basketballCompition/074.jpg!list1x.jpg",
-                date: "2023年12月1日",
+                date: "2023年11月15日",
                 category: "sports",
-                description: "记录2025年篮球比赛精彩瞬间，同学们在赛场上奋力拼搏，彰显了协作奋进的风貌。",
-                photos: [
-                    "basketballCompition/mmexport1749894346694.jpg",
-                    "basketballCompition/mmexport1749894346589.jpg",
-                    "basketballCompition/mmexport1749894346483.jpg",
-                    "basketballCompition/mmexport1749894346380.jpg"
+                description: "记录2025年篮球比赛精彩瞬间，同学们在赛场上奋力拼搏，彰显了协作奋进的风貌",
+                media: [
+                    { type: "image", url: "basketballCompition/mmexport1749894346694.jpg" },
+                    { type: "image", url: "basketballCompition/mmexport1749894346589.jpg" },
+                    { type: "image", url: "basketballCompition/mmexport1749894346483.jpg" },
+					{ type: "image", url: "basketballCompition/mmexport1749894346380.jpg" },
+					{ type: "video", url: "basketballraido/mmexport1749894346762.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114628.png" },
+					
+					{ type: "video", url: "basketballraido/mmexport1749894346972.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114644.png" },
+					
+					{ type: "video", url: "basketballraido/mmexport1749894347401.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114548.png" },
+					
+					{ type: "video", url: "basketballraido/mmexport1749894347552.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114610.png" },
+					
+					{ type: "video", url: "basketballraido/mmexport1749894349860.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_113931.png" }
+                ]
+            },
+            {
+                id: 2,
+                title: "2023冬季运动会",
+                cover: "SportCompition/IMG_20231201_154026.jpg",
+                date: "2024年3月28日",
+                category: "trip",
+                description: "记录2023年冬季运动会的精彩瞬间，同学们在运动场上挥洒汗水，展现了团结拼搏的精神。",
+                media: [
+                    { type: "image", url:"SportCompition/mmexport1749893916868.jpg"  },
+                    { type: "image", url:"SportCompition/mmexport1749893946051.jpg"},
+                    { type: "image", url:  "SportCompition/mmexport1749893932629.jpg" },
+                    { type: "image", url: "SportCompition/mmexport1749893111528.jpg" }
                 ]
             },
             {
                 id: 3,
                 title: "春游之旅",
-                cover: "SpringTravel/MTXX_MH20240322_132203661(1).jpg",
-                date: "2024年3月28日",
-                category: "trip",
+                cover: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                date: "2024年12月31日",
+                category: "festival",
                 description: "2024年春季学期组织的春游活动。同学们欢聚在一起，其乐融融！！！",
-                photos: [
-                    "SpringTravel/IMG20240322155429(1).jpg",
-                    "SpringTravel/IMG20240322112824(1).jpg",
-                    "SpringTravel/IMG20240322110940(1).jpg",
-                    "SpringTravel/IMG20240322075546(1).jpg"
+                media: [
+                    { type: "image", url: "SpringTravel/IMG20240322155429(1).jpg"},
+                    { type: "image", url: "SpringTravel/IMG20240322112824(1).jpg"},
+                    { type: "image", url: "SpringTravel/IMG20240322110940(1).jpg" },
+                    { type: "image", url: "SpringTravel/IMG20240322075546(1).jpg" }
                 ]
             },
             {
                 id: 4,
                 title: "班级大合照",
                 cover: "total/MTXX_MR20240221_132314017(1).jpg",
-                date: "2024年12月31日",
+                date: "2025年5月10日",
                 category: "activity",
-                description: "2023届9班元旦晚会，同学们自编自导自演，展示才艺，共度新年。精彩的歌舞、小品和游戏环节让大家度过了一个难忘的夜晚。",
-                photos: [
-                    "total/MTXX_MH20240308_185556191(1).jpg",
-                    "total/mmexport1749894289813.jpg",
-                    "total/IMG_20240412_18132411(1).jpg",
-                    "total/IMG_20230919_083807.jpg"
+                description: "大家一起比耶！！！",
+                media: [
+                    { type: "image", url: "total/MTXX_MH20240308_185556191(1).jpg",},
+                    { type: "image", url:  "total/mmexport1749894289813.jpg"},
+                    { type: "image", url:  "total/IMG_20240412_18132411(1).jpg"},
+                    { type: "image", url:  "total/IMG_20230919_083807.jpg" }
                 ]
             },
-           
-            {
+			{
                 id: 5,
                 title: "武术操",
-                cover: "festival/IMG_20231013_163355.jpg",
-                date: "2024年6月15日",
-                category: "festival",
+                cover:"festival/IMG_20231013_163355.jpg",
+                date: "2025年5月10日",
+                category: "activity",
                 description: "同学们在打武术操。",
-                photos: [
-                    "festival/IMG_20240117_171116.jpg",
-                    "festival/IMG20240531173452.jpg",
-                    "festival/IMG20240605101039.jpg",
-                    "festival/IMG20240605101517.jpg"
+                media: [
+                    { type: "image", url:"festival/IMG_20240117_171116.jpg"},
+                    { type: "image", url:  "festival/IMG20240531173452.jpg"},
+                    { type: "image", url:  "festival/IMG20240605101039.jpg"},
+                    { type: "image", url:  "festival/IMG20240605101517.jpg"}
                 ]
             }
         ];
@@ -1141,7 +1198,13 @@
                 const card = document.createElement('div');
                 card.className = 'album-card';
                 card.dataset.id = album.id;
+                
+                // 检查相册是否包含视频（仅篮球相册）
+                const hasVideos = album.id === 1 && album.media.some(item => item.type === "video");
+                const videoBadge = hasVideos ? '<div class="video-badge"><i class="fas fa-video"></i> 含视频</div>' : '';
+                
                 card.innerHTML = `
+                    ${videoBadge}
                     <img src="${album.cover}" alt="${album.title}" class="album-cover">
                     <div class="album-info">
                         <h3 class="album-title">${album.title}</h3>
@@ -1150,7 +1213,7 @@
                                 <i class="far fa-calendar"></i> ${album.date}
                             </div>
                             <div class="album-photos-count">
-                                <i class="fas fa-images"></i> ${album.photos.length}张照片
+                                <i class="fas fa-images"></i> ${album.media.length}个媒体
                             </div>
                         </div>
                     </div>
@@ -1172,25 +1235,62 @@
             // 更新相册详情信息
             document.getElementById('album-detail-title').textContent = album.title;
             document.getElementById('album-date').textContent = album.date;
-            document.getElementById('album-count').textContent = `${album.photos.length}张照片`;
+            document.getElementById('album-count').textContent = `${album.media.length}个媒体`;
             document.getElementById('album-description').textContent = album.description;
             
-            // 渲染相册照片
-            const photosContainer = document.getElementById('album-photos');
-            photosContainer.innerHTML = '';
+            // 渲染相册媒体内容
+            const mediaContainer = document.getElementById('album-media');
+            mediaContainer.innerHTML = '';
             
-            album.photos.forEach(photo => {
-                const card = document.createElement('div');
-                card.className = 'photo-card';
-                card.innerHTML = `
-                    <img src="${photo}" alt="${album.title}" class="photo-img">
-                    <div class="photo-info">
-                        <a href="${photo}" download="${album.title}.jpg" class="download-btn">
-                            <i class="fas fa-download"></i> 下载
-                        </a>
-                    </div>
-                `;
-                photosContainer.appendChild(card);
+            album.media.forEach(item => {
+                let mediaElement;
+                if (item.type === "image") {
+                    mediaElement = `
+                        <div class="media-card">
+                            <img src="${item.url}" alt="${album.title}" class="media-img">
+                            <div class="media-info">
+                                <a href="${item.url}" download="${album.title}.jpg" class="download-btn">
+                                    <i class="fas fa-download"></i> 下载图片
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                } else if (item.type === "video") {
+                    mediaElement = `
+                        <div class="media-card" data-video="${item.url}">
+                            <img src="${item.thumbnail}" alt="${album.title}" class="media-img">
+                            <div class="video-play-icon">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <div class="media-info">
+                                <button class="download-btn play-video-btn">
+                                    <i class="fas fa-play"></i> 播放视频
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (mediaElement) {
+                    const mediaDiv = document.createElement('div');
+                    mediaDiv.innerHTML = mediaElement;
+                    mediaContainer.appendChild(mediaDiv);
+                    
+                    // 为视频卡片添加点击事件
+                    if (item.type === "video") {
+                        const playBtn = mediaDiv.querySelector('.play-video-btn');
+                        const mediaCard = mediaDiv.querySelector('.media-card');
+                        
+                        playBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            playVideo(item.url);
+                        });
+                        
+                        mediaCard.addEventListener('click', () => {
+                            playVideo(item.url);
+                        });
+                    }
+                }
             });
             
             // 切换到相册详情视图
@@ -1202,6 +1302,38 @@
             // 滚动到页面顶部
             window.scrollTo(0, 0);
         }
+        
+        // 播放视频
+        function playVideo(videoUrl) {
+            const modal = document.getElementById('videoModal');
+            const videoPlayer = document.getElementById('modalVideo');
+            
+            videoPlayer.src = videoUrl;
+            modal.style.display = 'flex';
+            videoPlayer.play();
+        }
+        
+        // 关闭视频模态框
+        document.getElementById('closeModal').addEventListener('click', () => {
+            const modal = document.getElementById('videoModal');
+            const videoPlayer = document.getElementById('modalVideo');
+            
+            videoPlayer.pause();
+            videoPlayer.src = '';
+            modal.style.display = 'none';
+        });
+        
+        // 点击模态框背景关闭
+        document.getElementById('videoModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('videoModal')) {
+                const modal = document.getElementById('videoModal');
+                const videoPlayer = document.getElementById('modalVideo');
+                
+                videoPlayer.pause();
+                videoPlayer.src = '';
+                modal.style.display = 'none';
+            }
+        });
         
         // 返回相册集
         function backToAlbums() {
@@ -1227,7 +1359,7 @@
         // 返回按钮事件
         document.getElementById('back-to-albums').addEventListener('click', backToAlbums);
 
-        // 通讯录搜索功能 (增强为多列搜索)
+        // 通讯录搜索功能
         const searchInput = document.querySelector('.search-input');
         if(searchInput) {
             searchInput.addEventListener('input', function() {
@@ -1264,3 +1396,8 @@
     </script>
 </body>
 </html>
+
+
+
+
+
