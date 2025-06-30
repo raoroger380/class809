@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 口令模态框样式 */
+		/* 口令模态框样式 */
         .password-modal {
             position: fixed;
             top: 0;
@@ -163,14 +163,6 @@
             font-weight: 600;
         }
 
-        /* 隐藏网站内容直到认证通过 */
-        body:not(.authenticated) header,
-        body:not(.authenticated) main,
-        body:not(.authenticated) footer {
-            display: none;
-        }
-
-        /* 原有样式保持不变 */
         * {
             margin: 0;
             padding: 0;
@@ -210,18 +202,800 @@
             z-index: 100;
         }
 
-        /* 其余样式保持不变... */
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .class-info {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.15);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+        }
+
+        nav {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+
+        /* 首页样式 */
+        .welcome-message {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+        }
+
+        .welcome-message p {
+            font-size: 1.2rem;
+            margin: 1.2rem 0;
+            color: #444;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 700;
+            background: linear-gradient(transparent 70%, rgba(67, 97, 238, 0.2) 0);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin-top: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(67, 97, 238, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(67, 97, 238, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .feature-desc {
+            color: #555;
+            font-size: 1.05rem;
+        }
+
+        /* 通讯录样式 */
+        .contact-search {
+            display: flex;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .search-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-btn:hover {
+            background: var(--secondary);
+        }
+
+        .contact-list {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-list th {
+            background: var(--primary);
+            color: white;
+            text-align: left;
+            padding: 1.2rem;
+            font-weight: 600;
+        }
+
+        .contact-list td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .contact-list tr:last-child td {
+            border-bottom: none;
+        }
+
+        .contact-list tr:hover {
+            background-color: #f8f9ff;
+        }
+
+        .contact-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .contact-btn {
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-call {
+            background: #28a745;
+        }
+
+        .btn-email {
+            background: #dc3545;
+        }
+
+        .btn-message {
+            background: #ffc107;
+        }
+
+        /* 网盘下载区域 - 位于精彩瞬间页面顶部 */
+        .cloud-download-section {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(78, 115, 223, 0.2);
+        }
+
+        .cloud-download-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(78, 115, 223, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .cloud-download-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 100px;
+            height: 100px;
+            background: rgba(78, 115, 223, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .cloud-icon {
+            font-size: 4rem;
+            color: var(--cloud);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .download-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.8rem;
+            color: var(--cloud);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-description {
+            color: #555;
+            margin-bottom: 1.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--cloud);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(78, 115, 223, 0.4);
+            min-width: 220px;
+            justify-content: center;
+        }
+
+        .download-link:hover {
+            background: #3a56c4;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(78, 115, 223, 0.5);
+        }
+
+        .download-link i {
+            font-size: 1.3rem;
+        }
+
+        .download-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        /* 精彩瞬间样式 */
+        .moments-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .moments-filter-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .moments-filter-btn[data-category="sports"] {
+            border-color: var(--sports);
+            color: var(--sports);
+        }
+
+        .moments-filter-btn.active, .moments-filter-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .moments-filter-btn[data-category="sports"].active, 
+        .moments-filter-btn[data-category="sports"]:hover {
+            background: var(--sports);
+            color: white;
+        }
+
+        .album-collection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .album-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .album-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .album-cover {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .album-card:hover .album-cover {
+            transform: scale(1.05);
+        }
+        
+        .video-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(230, 57, 70, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .album-info {
+            padding: 1.2rem;
+        }
+
+        .album-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .album-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .album-photos-count {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .album-date {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* 相册详情页 */
+        .album-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: var(--secondary);
+            transform: translateX(-3px);
+        }
+
+        .album-detail-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 2rem;
+            color: var(--secondary);
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .album-detail-meta {
+            text-align: center;
+            color: #777;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .album-description {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            line-height: 1.7;
+            color: #555;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* 相册详情页媒体网格 */
+        .media-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .media-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            aspect-ratio: 4/3;
+        }
+
+        .media-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .media-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+        }
+
+        .media-card:hover .media-info {
+            transform: translateY(0);
+        }
+        
+        .video-play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        
+        .media-card:hover .video-play-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .download-btn {
+            color: white;
+            background: var(--primary);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: var(--secondary);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 0.8rem;
+            }
+            
+            .nav-links a {
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .album-collection {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .album-detail-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .back-button {
+                order: -1;
+            }
+            
+            .album-detail-title {
+                text-align: left;
+                width: 100%;
+            }
+            
+            .download-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .download-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .media-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-content p {
+            margin: 0.5rem 0;
+        }
+        
+        .footer-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .footer-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 视频模态框 */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .modal-video {
+            width: 100%;
+            height: 450px;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .modal-video {
+                height: 300px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- 口令输入模态框 -->
+	 <!-- 口令输入模态框 -->
     <div class="password-modal" id="passwordModal">
         <div class="modal-container">
             <div class="lock-icon">
                 <i class="fas fa-lock"></i>
             </div>
             <h2 class="modal-title">班级网站访问授权</h2>
-            <p class="modal-subtitle">请输入访问口令进入2023届9班班级网站</p>
+            <p class="modal-subtitle">请输入访问口令进入澜石中学2023届9班班级网站</p>
             
             <div class="password-form">
                 <input type="password" class="password-input" id="passwordInput" placeholder="请输入班级口令" autocomplete="off">
@@ -230,12 +1004,9 @@
                     <i class="fas fa-unlock"></i> 进入网站
                 </button>
             </div>
-            
-            <p class="hint">提示：口令是我们班级的<span class="highlight">口号数字</span> + <strong>最强</strong></p>
         </div>
     </div>
-
-    <!-- 原有网站内容 -->
+	
     <header>
         <div class="header-content">
             <h1>澜石中学2023届9班</h1>
@@ -308,7 +1079,7 @@
                     <a href="https://pan.baidu.com/s/1lSs9qKgI_l_MBpHkUO5AKw?pwd=0809 " class="download-link">
                         <i class="fab fa-baidu"></i> 百度网盘
                     </a>
-                    <a href="gh repo clone raoroger380/class809/班级照片.zip" class="download-link">
+                    <a href="班级照片.z01" class="download-link">
                         <i class="fas fa-download"></i> 直接下载
                     </a>
                 </div>
@@ -373,7 +1144,6 @@
                         <th>姓名</th>
                         <th>学号</th>
                         <th>电话</th>
-                        <th>邮箱</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -403,8 +1173,8 @@
     </footer>
 
     <script>
-        // ====================== 口令验证功能 ======================
-        const PASSWORD = "809"; // 设置访问口令
+		 // ====================== 口令验证功能 ======================
+        const PASSWORD = "809520"; // 设置访问口令
         const passwordModal = document.getElementById('passwordModal');
         const passwordInput = document.getElementById('passwordInput');
         const submitPassword = document.getElementById('submitPassword');
@@ -474,8 +1244,7 @@
         
         // 页面加载时检查认证状态
         document.addEventListener('DOMContentLoaded', checkAuthentication);
-        
-        // ====================== 原有网站功能 ======================
+		
         // 导航切换功能
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
@@ -496,73 +1265,57 @@
 
         // 通讯录数据
         const contacts = [
-<<<<<<< Updated upstream
-            { id: 1, name: "陈祖名", studentId: "1", phone: "17317538671", email: "x" },
-            { id: 2, name: "邓嘉麒", studentId: "2", phone: "x", email: "x" },
-            { id: 3, name: "邓培城", studentId: "3", phone: "18038623356", email: "x" },
-            { id: 4, name: "邓为凌", studentId: "4", phone: "x", email: "x" },
-            { id: 5, name: "范俊皓", studentId: "5", phone: "18042852842", email: "x" },
-            { id: 6, name: "付子睿", studentId: "6", phone: "x", email: "x" },
-            { id: 7, name: "何瑞开", studentId: "7", phone: "x", email: "x" },
-            { id: 8, name: "洪子尧", studentId: "8", phone: "x", email: "x" },
-            { id: 9, name: "黄子健", studentId: "9", phone: "18948138752", email: "x" },
-=======
-            { id: 01, name: "陈祖名", studentId: "01", phone: "17317538671", email: "x" },
-            { id: 02, name: "邓嘉麒", studentId: "02", phone: "x", email: "x" },
-            { id: 03, name: "邓培城", studentId: "03", phone: "18038623356", email: "x" },
-            { id: 04, name: "邓为凌", studentId: "04", phone: "x", email: "x" },
-            { id: 05, name: "范俊皓", studentId: "05", phone: "18042852842", email: "x" },
-            { id: 06, name: "付子睿", studentId: "06", phone: "x", email: "x" },
-            { id: 07, name: "何瑞开", studentId: "07", phone: "x", email: "x" },
-            { id: 08, name: "洪子尧", studentId: "08", phone: "x", email: "x" },
-            { id: 09, name: "黄子健", studentId: "09", phone: "18948138752", email: "x" },
->>>>>>> Stashed changes
-            { id: 10, name: "黄梓恒", studentId: "10", phone: "13690787319", email: "x" },
-            { id: 11, name: "简裕桐", studentId: "11", phone: "18125723927", email: "x" },
-            { id: 12, name: "梁耿豪", studentId: "12", phone: "15220977628", email: "x" },
-            { id: 13, name: "梁昊贤", studentId: "13", phone: "x", email: "x" },
-<<<<<<< Updated upstream
-            { id: 14, name: "梁建明", studentId: "14", phone: "x", email: "x" },
-=======
-            { id: 14, name: "梁建明", studentId: "14", phone: "18077902825", email: "x" },
->>>>>>> Stashed changes
-            { id: 15, name: "梁舒然", studentId: "15", phone: "x", email: "x" },
-            { id: 16, name: "梁轩豪", studentId: "16", phone: "13380222615", email: "x" },
-            { id: 17, name: "林峰", studentId: "17", phone: "x", email: "x" },
-            { id: 18, name: "罗万里", studentId: "18", phone: "x", email: "x" },
-            { id: 19, name: "农友维", studentId: "19", phone: "x", email: "x" },
-            { id: 20, name: "饶启烨", studentId: "20", phone: "18934300811", email: "raoroger380@gmail.com" },
-            { id: 21, name: "谭铭坚", studentId: "21", phone: "13925936356", email: "x" },
-            { id: 22, name: "涂宇毅", studentId: "22", phone: "x", email: "x" },
-            { id: 23, name: "韦吉涛", studentId: "23", phone: "x", email: "x" },
-            { id: 24, name: "文荣朗", studentId: "24", phone: "18138477231", email: "x" },
-            { id: 25, name: "伍希彦", studentId: "25", phone: "x", email: "x" },
-            { id: 26, name: "萧子轩", studentId: "26", phone: "x", email: "x" },
-            { id: 27, name: "许梓栎", studentId: "27", phone: "18923128365（许梓栎妈妈的）", email: "x" },
-            { id: 28, name: "张梓锋", studentId: "28", phone: "x", email: "x" },
-            { id: 29, name: "蔡安棋", studentId: "29", phone: "13630171064", email: "x" },
-            { id: 30, name: "陈美琪", studentId: "30", phone: "13380252898", email: "x" },
-            { id: 31, name: "陈沛珊", studentId: "31", phone: "13516577332", email: "x" },
-            { id: 32, name: "陈彦汝", studentId: "32", phone: "x", email: "x" },
-            { id: 33, name: "陈紫夏", studentId: "33", phone: "x", email: "x" },
-            { id: 34, name: "葛沁瑞", studentId: "34", phone: "18024948314", email: "x" },
-            { id: 35, name: "何宝妍", studentId: "35", phone: "15813433632", email: "x" },
-            { id: 36, name: "何姝珊", studentId: "36", phone: "x", email: "x" },
-            { id: 37, name: "黄潼芯", studentId: "37", phone: "x", email: "x" },
-            { id: 38, name: "梁沁滢", studentId: "38", phone: "x", email: "x" },
-            { id: 39, name: "梁梓嫣", studentId: "39", phone: "x", email: "x" },
-            { id: 40, name: "凌嘉悦", studentId: "40", phone: "x", email: "x" },
-            { id: 41, name: "倫培楠", studentId: "41", phone: "x", email: "x" },
-            { id: 42, name: "吕安晨", studentId: "42", phone: "x", email: "x" },
-            { id: 43, name: "王井宣", studentId: "43", phone: "15813685462", email: "x" },
-            { id: 44, name: "王雅凝", studentId: "44", phone: "x", email: "x" },
-            { id: 45, name: "谢安琪", studentId: "45", phone: "x", email: "x" },
-            { id: 46, name: "许熙桐", studentId: "46", phone: "13392264393", email: "x" },
-            { id: 47, name: "张诗华", studentId: "47", phone: "x", email: "x" },
-            { id: 48, name: "张溢嘉", studentId: "48", phone: "x", email: "x" },
-            { id: 49, name: "张子欣", studentId: "49", phone: "x", email: "x" },
-            { id: 50, name: "钟慧樱", studentId: "50", phone: "x", email: "x" },
-            { id: 51, name: "曾嘉丽", studentId: "51", phone: "x", email: "x" }
+            { id: 01, name: "陈祖名", studentId: "01", phone: "17317538671"},
+            { id: 02, name: "邓嘉麒", studentId: "02", phone: "x"},
+            { id: 03, name: "邓培城", studentId: "03", phone: "18038623356"},
+            { id: 04, name: "邓为凌", studentId: "04", phone: "x"},
+            { id: 05, name: "范俊皓", studentId: "05", phone: "18042852842"},
+            { id: 06, name: "付子睿", studentId: "06", phone: "x"},
+            { id: 07, name: "何瑞开", studentId: "07", phone: "x"},
+            { id: 08, name: "洪子尧", studentId: "08", phone: "x"},
+            { id: 09, name: "黄子健", studentId: "09", phone: "18948138752"},
+            { id: 10, name: "黄梓恒", studentId: "10", phone: "13690787319"},
+            { id: 11, name: "简裕桐", studentId: "11", phone: "18125723927"},
+            { id: 12, name: "梁耿豪", studentId: "12", phone: "15220977628"},
+            { id: 13, name: "梁昊贤", studentId: "13", phone: "x"},
+            { id: 14, name: "梁建明", studentId: "14", phone: "18077902825"},
+            { id: 15, name: "梁舒然", studentId: "15", phone: "x"},
+            { id: 16, name: "梁轩豪", studentId: "16", phone: "13380222615"},
+            { id: 17, name: "林峰", studentId: "17", phone: "x"},
+            { id: 18, name: "罗万里", studentId: "18", phone: "x"},
+            { id: 19, name: "农友维", studentId: "19", phone: "x"},
+            { id: 20, name: "饶启烨", studentId: "20", phone: "18934300811"},
+            { id: 21, name: "谭铭坚", studentId: "21", phone: "13925936356"},
+            { id: 22, name: "涂宇毅", studentId: "22", phone: "x"},
+            { id: 23, name: "韦吉涛", studentId: "23", phone: "x"},
+            { id: 24, name: "文荣朗", studentId: "24", phone: "18138477231"},
+            { id: 25, name: "伍希彦", studentId: "25", phone: "x"},
+            { id: 26, name: "萧子轩", studentId: "26", phone: "x"},
+            { id: 27, name: "许梓栎", studentId: "27", phone: "18923128365（许梓栎妈妈的）"},
+            { id: 28, name: "张梓锋", studentId: "28", phone: "x"},
+            { id: 29, name: "蔡安棋", studentId: "29", phone: "13630171064"},
+            { id: 30, name: "陈美琪", studentId: "30", phone: "13380252898"},
+            { id: 31, name: "陈沛珊", studentId: "31", phone: "13516577332"},
+            { id: 32, name: "陈彦汝", studentId: "32", phone: "x"},
+            { id: 33, name: "陈紫夏", studentId: "33", phone: "x"},
+            { id: 34, name: "葛沁瑞", studentId: "34", phone: "18024948314"},
+            { id: 35, name: "何宝妍", studentId: "35", phone: "15813433632"},
+            { id: 36, name: "何姝珊", studentId: "36", phone: "x"},
+            { id: 37, name: "黄潼芯", studentId: "37", phone: "x"},
+            { id: 38, name: "梁沁滢", studentId: "38", phone: "x"},
+            { id: 39, name: "梁梓嫣", studentId: "39", phone: "x"},
+            { id: 40, name: "凌嘉悦", studentId: "40", phone: "x"},
+            { id: 41, name: "倫培楠", studentId: "41", phone: "x"},
+            { id: 42, name: "吕安晨", studentId: "42", phone: "x"},
+            { id: 43, name: "王井宣", studentId: "43", phone: "15813685462"},
+            { id: 44, name: "王雅凝", studentId: "44", phone: "x"},
+            { id: 45, name: "谢安琪", studentId: "45", phone: "x"},
+            { id: 46, name: "许熙桐", studentId: "46", phone: "13392264393"},
+            { id: 47, name: "张诗华", studentId: "47", phone: "x"},
+            { id: 48, name: "张溢嘉", studentId: "48", phone: "x"},
+            { id: 49, name: "张子欣", studentId: "49", phone: "x"},
+            { id: 50, name: "钟慧樱", studentId: "50", phone: "x"},
+            { id: 51, name: "曾嘉丽", studentId: "51", phone: "x"	}
         ];
         
         // 精彩瞬间相册集数据 - 仅在篮球相册中添加视频
@@ -578,12 +1331,16 @@
                     { type: "image", url: "basketballCompition/mmexport1749894346694.jpg" },
                     { type: "image", url: "basketballCompition/mmexport1749894346589.jpg" },
                     { type: "image", url: "basketballCompition/mmexport1749894346483.jpg" },
-                    { type: "image", url: "basketballCompition/mmexport1749894346380.jpg" },
-                    { type: "video", url: "basketballraido/mmexport1749894346762.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114628.png" },
-                    { type: "video", url: "basketballraido/mmexport1749894346972.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114644.png" },
-                    { type: "video", url: "basketballraido/mmexport1749894347401.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114548.png" },
-                    { type: "video", url: "basketballraido/mmexport1749894347552.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114610.png" },
-                    { type: "video", url: "basketballraido/mmexport1749894349860.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_113931.png" }
+					{ type: "image", url: "basketballCompition/mmexport1749894346380.jpg" },
+					{ type: "video", url: "basketballraido/mmexport1749894346762.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114628.png" },
+					
+					{ type: "video", url: "basketballraido/mmexport1749894346972.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114644.png" },
+					
+					{ type: "video", url: "basketballraido/mmexport1749894347401.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114548.png" },
+					
+					{ type: "video", url: "basketballraido/mmexport1749894347552.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_114610.png" },
+					
+					{ type: "video", url: "basketballraido/mmexport1749894349860.mp4", thumbnail:"basketballraido/Screenshot_2025_0621_113931.png" }
                 ]
             },
             {
@@ -628,7 +1385,7 @@
                     { type: "image", url:  "total/IMG_20230919_083807.jpg" }
                 ]
             },
-            {
+			{
                 id: 5,
                 title: "武术操",
                 cover:"festival/IMG_20231013_163355.jpg",
@@ -655,14 +1412,10 @@
                     <td>${contact.name}</td>
                     <td>${contact.studentId}</td>
                     <td>${contact.phone}</td>
-                    <td>${contact.email}</td>
                     <td>
                         <div class="contact-actions">
                             <a href="tel:${contact.phone}" class="contact-btn btn-call">
                                 <i class="fas fa-phone"></i>
-                            </a>
-                            <a href="mailto:${contact.email}" class="contact-btn btn-email">
-                                <i class="fas fa-envelope"></i>
                             </a>
                             <a href="#" class="contact-btn btn-message">
                                 <i class="fas fa-comment"></i>
@@ -885,3 +1638,8 @@
     </script>
 </body>
 </html>
+
+
+
+
+
