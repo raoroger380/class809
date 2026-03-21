@@ -15,47 +15,45 @@
         }
 
         :root {
-            --primary: #4361ee;
-            --primary-light: #5a75f1;
-            --secondary: #3f37c9;
-            --accent: #4895ef;
-            --light: #f8f9fa;
-            --light-gray: #f0f2f5;
-            --dark: #212529;
-            --text: #333;
-            --text-light: #666;
-            --success: #4cc9f0;
-            --card-bg: #ffffff;
-            --shadow: rgba(99, 99, 99, 0.15) 0px 2px 8px 0px;
-            --shadow-hover: rgba(67, 97, 238, 0.2) 0px 12px 25px;
-            --cloud: #4e73df;
+            --primary: #1b4de1;
+            --primary-light: #3a6ffa;
+            --secondary: #0d2f9f;
+            --accent: #ff8b5c;
+            --light: #f4f6ff;
+            --light-gray: #dfe7ff;
+            --dark: #101736;
+            --text: #15203a;
+            --text-light: #5c6483;
+            --success: #48c78e;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 20px 45px rgba(18, 32, 86, 0.08);
+            --shadow-hover: 0 30px 60px rgba(18, 32, 86, 0.2);
+            --cloud: #5c7cfa;
             --sports: #ff6b6b;
-            --border-radius: 16px;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 24px;
+            --transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background: linear-gradient(180deg, #f4f6ff 0%, #dfe7ff 55%, #fdfefe 100%);
             color: var(--text);
-            line-height: 1.7;
+            line-height: 1.75;
             min-height: 100vh;
-            background-attachment: fixed;
-            background-size: cover;
             position: relative;
             overflow-x: hidden;
+            padding-bottom: 3rem;
         }
         
         body::before {
             content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgzMCkiPjxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEiIGZpbGw9InJnYmEoNjcsIDk3LCAyMzgsIDAuMDMpIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
-            opacity: 0.5;
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% -10%, rgba(255, 255, 255, 0.7) 0%, transparent 45%),
+                        radial-gradient(circle at 80% 20%, rgba(90, 111, 250, 0.25) 0%, transparent 60%);
+            pointer-events: none;
             z-index: -1;
+            opacity: 0.75;
         }
 
         /* ========== 口令模态框 ========== */
@@ -257,120 +255,274 @@
 
         /* ========== 头部导航 ========== */
         header {
-            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, rgba(27, 77, 225, 0.95), rgba(13, 47, 159, 0.95));
             color: white;
-            padding: 1.5rem 0;
+            padding: 0.9rem 0;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 20px rgba(13, 47, 159, 0.35);
         }
 
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        h1 {
+        header h1 {
             font-family: 'Quicksand', sans-serif;
             font-weight: 700;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            font-size: 1.9rem;
+            letter-spacing: 0.25em;
+            margin-bottom: 0;
         }
 
-        .class-info {
+        .hero-details {
+            margin-top: -1rem;
+            background: linear-gradient(135deg, rgba(27, 77, 225, 0.95), rgba(13, 47, 159, 0.95));
+            border-radius: 0 0 36px 36px;
+            padding: 2rem 0;
+            box-shadow: 0 15px 40px rgba(10, 37, 118, 0.35);
+        }
+
+        .hero-details-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-main {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .eyebrow {
+            font-size: 0.95rem;
+            letter-spacing: 0.4em;
+            opacity: 0.8;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-subtext {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.6;
+            max-width: 520px;
+            margin: 0 0 1.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary,
+        .btn-ghost {
+            border-radius: 999px;
+            padding: 0.9rem 1.6rem;
+            font-weight: 600;
             font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--secondary);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 35px rgba(255, 255, 255, 0.45);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-insights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            flex: 0 0 320px;
+            min-width: 260px;
+        }
+
+        .insight-card {
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: var(--border-radius);
+            padding: 1rem 1.2rem;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(20px);
+        }
+
+        .insight-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .insight-label {
+            font-size: 0.95rem;
             opacity: 0.9;
-            margin-bottom: 1.5rem;
-            background: rgba(255,255,255,0.15);
-            padding: 0.6rem 2rem;
-            border-radius: 30px;
-            font-weight: 500;
-            max-width: 80%;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .insight-meta {
+            font-size: 0.82rem;
+            opacity: 0.8;
+            margin-top: 0.25rem;
         }
 
         nav {
             width: 100%;
-            margin-top: 1rem;
+            margin-top: 2rem;
         }
 
         .nav-links {
             display: flex;
             justify-content: center;
             list-style: none;
-            gap: 1.8rem;
+            gap: 1.4rem;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
             color: white;
             text-decoration: none;
-            font-size: 1.15rem;
-            font-weight: 500;
-            padding: 0.6rem 1.4rem;
-            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.55rem 1.3rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid transparent;
             transition: var(--transition);
-            position: relative;
-            display: inline-block;
-            overflow: hidden;
-        }
-        
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-            z-index: -1;
-            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
+        .nav-links a.active,
         .nav-links a:hover {
-            transform: translateY(-3px);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-        }
-        
-        .nav-links a:hover::before {
-            transform: scaleX(1);
-        }
-
-        .nav-links a.active {
             background: rgba(255, 255, 255, 0.25);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.6);
         }
 
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
-            background: white;
-            border-radius: 50%;
+        .mobile-hero-details {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(67, 97, 238, 0.15);
+            color: var(--text);
+            margin: 1rem 0 0;
+            display: none;
+        }
+
+        .mobile-hero-details p {
+            margin-bottom: 0.65rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .mobile-hero-details .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 0.9rem;
+        }
+
+        .mobile-hero-details .meta-card {
+            flex: 1;
+            min-width: 110px;
+            padding: 0.9rem;
+            border-radius: 16px;
+            background: var(--light);
+            border: 1px solid rgba(67, 97, 238, 0.1);
+            text-align: center;
+        }
+
+        .mobile-hero-details .meta-card strong {
+            display: block;
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+            color: var(--secondary);
+        }
+
+        .mobile-hero-details .meta-card span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-details {
+                padding: 1.5rem 0;
+                border-radius: 0 0 24px 24px;
+            }
+
+            .hero-details-inner {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-main {
+                text-align: center;
+            }
+
+            .hero-insights {
+                justify-content: center;
+            }
+
+            nav {
+                margin-top: 1rem;
+            }
+
+            .header-content h1 {
+                letter-spacing: 0.08em;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .mobile-hero-details {
+                display: block;
+            }
         }
 
         /* ========== 主体内容 ========== */
         main {
             max-width: 1200px;
-            margin: 2.5rem auto;
-            padding: 0 20px;
+            margin: 0 auto;
+            padding: 0 20px 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
         }
 
         .section {
@@ -1335,16 +1487,65 @@
     <header>
         <div class="header-content">
             <h1>澜石中学2023届9班</h1>
-            <div class="class-info">九班最强，斗志昂扬；保持桂冠，永不言败。</div>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#" class="nav-link active" data-target="home">首页</a></li>
-                    <li><a href="#" class="nav-link" data-target="moments">精彩瞬间</a></li>
-                    <li><a href="#" class="nav-link" data-target="contact">通讯录</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
+
+    <div class="hero-details">
+        <div class="hero-details-inner">
+            <div class="hero-main">
+                <p class="eyebrow">9班纪念 · 2023届灞桥校友</p>
+                <div class="hero-subtext">从训练场到舞台、从比赛到假期，汇聚我们最闪亮的瞬间，留住彼此的努力与欢笑。</div>
+                <div class="hero-actions">
+                    <a href="#moments" class="btn-primary">查看精彩瞬间</a>
+                    <a href="#contact" class="btn-ghost">直达通讯录</a>
+                </div>
+            </div>
+            <div class="hero-insights">
+                <div class="insight-card">
+                    <span class="insight-number">400+</span>
+                    <span class="insight-label">张精选照片</span>
+                    <p class="insight-meta">记录2023-2025线下活动</p>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">50+</span>
+                    <span class="insight-label">位同学</span>
+                    <p class="insight-meta">活跃于训练、旅行与联欢</p>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">5</span>
+                    <span class="insight-label">个主题专辑</span>
+                    <p class="insight-meta">活动 / 体育 / 春游 / 合作记录</p>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-target="home">首页</a></li>
+                <li><a href="#" class="nav-link" data-target="moments">精彩瞬间</a></li>
+                <li><a href="#" class="nav-link" data-target="contact">通讯录</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-hero-details">
+            <p>从训练场到舞台、从比赛到假期，汇聚我们最闪亮的瞬间，留住彼此的努力与欢笑。</p>
+            <div class="hero-meta">
+                <div class="meta-card">
+                    <strong>400+</strong>
+                    <span>张精选照片</span>
+                    <span>记录2023-2025线下活动</span>
+                </div>
+                <div class="meta-card">
+                    <strong>50+</strong>
+                    <span>位同学</span>
+                    <span>活跃于训练、旅行与联欢</span>
+                </div>
+                <div class="meta-card">
+                    <strong>5</strong>
+                    <span>个主题专辑</span>
+                    <span>活动 / 体育 / 春游 / 合作</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main>
         <!-- 首页部分 -->
@@ -1355,6 +1556,27 @@
                 <p>这里是我们共同的家园，记录着我们成长的点点滴滴，承载着青春的美好回忆。</p>
                 <p>无论你身在何处，这里永远是我们心灵的港湾，连接着每一位班级成员。</p>
 				<p>让我们一起回忆初一初二的美好时光</p>
+            </div>
+
+            <div class="mobile-hero-details">
+                <p>从训练场到舞台、从比赛到假期，汇聚我们最闪亮的瞬间，留住彼此的努力与欢笑。</p>
+                <div class="hero-meta">
+                    <div class="meta-card">
+                        <strong>400+</strong>
+                        <span>张精选照片</span>
+                        <span>记录2023-2025线下活动</span>
+                    </div>
+                    <div class="meta-card">
+                        <strong>50+</strong>
+                        <span>位同学</span>
+                        <span>活跃于训练、旅行与联欢</span>
+                    </div>
+                    <div class="meta-card">
+                        <strong>5</strong>
+                        <span>个主题专辑</span>
+                        <span>活动 / 体育 / 春游 / 合作</span>
+                    </div>
+                </div>
             </div>
 
             <div class="features">
