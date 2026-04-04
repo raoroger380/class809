@@ -515,6 +515,217 @@
             }
         }
 
+        .hero-details,
+        .mobile-hero-details,
+        .hero-details-inner,
+        .hero-main,
+        .hero-subtext,
+        .hero-actions,
+        .hero-insights,
+        .insight-card,
+        .insight-number,
+        .insight-label,
+        .insight-meta,
+        .eyebrow,
+        .btn-primary,
+        .btn-ghost {
+            display: none;
+        }
+
+        header {
+            border-bottom: none;
+            box-shadow: 0 8px 24px rgba(13, 47, 159, 0.22);
+        }
+
+        header h1 {
+            font-size: 1.65rem;
+            letter-spacing: 0.08em;
+        }
+
+        .top-nav {
+            max-width: 1200px;
+            margin: 1rem auto 0;
+            padding: 0 20px;
+        }
+
+        .top-nav .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(27, 77, 225, 0.08);
+            border-radius: 999px;
+            padding: 0.45rem;
+            box-shadow: var(--shadow);
+        }
+
+        .top-nav .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.98rem;
+            font-weight: 600;
+            padding: 0.7rem 1.2rem;
+            border-radius: 999px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+        }
+
+        .top-nav .nav-links a.active,
+        .top-nav .nav-links a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 8px 18px rgba(27, 77, 225, 0.22);
+        }
+
+        .intro-panel {
+            background: linear-gradient(135deg, rgba(27, 77, 225, 0.97), rgba(13, 47, 159, 0.93));
+            border-radius: 28px;
+            padding: 1.6rem 1.8rem;
+            color: white;
+            box-shadow: 0 20px 42px rgba(13, 47, 159, 0.2);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-panel::before {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: -80px;
+            right: -60px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+        }
+
+        .intro-panel::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            left: -40px;
+            bottom: -50px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .intro-badge,
+        .intro-panel h2,
+        .intro-text,
+        .intro-stats {
+            position: relative;
+            z-index: 1;
+        }
+
+        .intro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            font-size: 0.88rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .intro-panel h2 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.65rem;
+            color: white;
+        }
+
+        .intro-text {
+            max-width: 720px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .intro-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1.4rem;
+        }
+
+        .intro-stat {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+            padding: 1rem 1.1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .intro-stat strong {
+            display: block;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .intro-stat span {
+            display: block;
+            font-size: 0.92rem;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .intro-stat small {
+            display: block;
+            margin-top: 0.2rem;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.78rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.35rem;
+                letter-spacing: 0.04em;
+            }
+
+            .top-nav {
+                margin-top: 0.8rem;
+            }
+
+            .top-nav .nav-links {
+                gap: 0.5rem;
+                padding: 0.35rem;
+                border-radius: 22px;
+            }
+
+            .top-nav .nav-links a {
+                font-size: 0.92rem;
+                padding: 0.6rem 0.9rem;
+                flex: 1 1 30%;
+            }
+
+            .intro-panel {
+                padding: 1.25rem 1rem;
+                border-radius: 22px;
+                margin-bottom: 1.4rem;
+            }
+
+            .intro-panel h2 {
+                font-size: 1.45rem;
+            }
+
+            .intro-text {
+                font-size: 0.94rem;
+            }
+
+            .intro-stats {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+        }
+
         /* ========== 主体内容 ========== */
         main {
             max-width: 1200px;
@@ -1490,93 +1701,45 @@
         </div>
     </header>
 
-    <div class="hero-details">
-        <div class="hero-details-inner">
-            <div class="hero-main">
-                <p class="eyebrow">9班纪念 · 2023届灞桥校友</p>
-                <div class="hero-subtext">从训练场到舞台、从比赛到假期，汇聚我们最闪亮的瞬间，留住彼此的努力与欢笑。</div>
-                <div class="hero-actions">
-                    <a href="#moments" class="btn-primary">查看精彩瞬间</a>
-                    <a href="#contact" class="btn-ghost">直达通讯录</a>
-                </div>
-            </div>
-            <div class="hero-insights">
-                <div class="insight-card">
-                    <span class="insight-number">400+</span>
-                    <span class="insight-label">张精选照片</span>
-                    <p class="insight-meta">记录2023-2025线下活动</p>
-                </div>
-                <div class="insight-card">
-                    <span class="insight-number">50+</span>
-                    <span class="insight-label">位同学</span>
-                    <p class="insight-meta">活跃于训练、旅行与联欢</p>
-                </div>
-                <div class="insight-card">
-                    <span class="insight-number">5</span>
-                    <span class="insight-label">个主题专辑</span>
-                    <p class="insight-meta">活动 / 体育 / 春游 / 合作记录</p>
-                </div>
-            </div>
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#" class="nav-link active" data-target="home">首页</a></li>
-                <li><a href="#" class="nav-link" data-target="moments">精彩瞬间</a></li>
-                <li><a href="#" class="nav-link" data-target="contact">通讯录</a></li>
-            </ul>
-        </nav>
-        <div class="mobile-hero-details">
-            <p>从训练场到舞台、从比赛到假期，汇聚我们最闪亮的瞬间，留住彼此的努力与欢笑。</p>
-            <div class="hero-meta">
-                <div class="meta-card">
-                    <strong>400+</strong>
-                    <span>张精选照片</span>
-                    <span>记录2023-2025线下活动</span>
-                </div>
-                <div class="meta-card">
-                    <strong>50+</strong>
-                    <span>位同学</span>
-                    <span>活跃于训练、旅行与联欢</span>
-                </div>
-                <div class="meta-card">
-                    <strong>5</strong>
-                    <span>个主题专辑</span>
-                    <span>活动 / 体育 / 春游 / 合作</span>
-                </div>
-            </div>
-        </div>
+    <div class="top-nav">
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link active" data-target="home">首页</a></li>
+            <li><a href="#" class="nav-link" data-target="moments">精彩瞬间</a></li>
+            <li><a href="#" class="nav-link" data-target="contact">通讯录</a></li>
+        </ul>
     </div>
 
     <main>
         <!-- 首页部分 -->
         <section id="home" class="section active">
+            <div class="intro-panel">
+                <div class="intro-badge">2023届9班 · 班级时光记录</div>
+                <h2>欢迎回来</h2>
+                <p class="intro-text">这里还保留着班级的照片、活动和回忆，随时都可以回来翻一翻，看看大家一起走过的时光。</p>
+                <div class="intro-stats">
+                    <div class="intro-stat">
+                        <strong>400+</strong>
+                        <span>精选照片</span>
+                        <small>2023-2025 活动记录</small>
+                    </div>
+                    <div class="intro-stat">
+                        <strong>50+</strong>
+                        <span>班级成员</span>
+                        <small>可快速查看通讯录</small>
+                    </div>
+                    <div class="intro-stat">
+                        <strong>5</strong>
+                        <span>主题相册</span>
+                        <small>比赛、春游、活动合集</small>
+                    </div>
+                </div>
+            </div>
             <h2 class="section-title">欢迎来到我们的班级网站</h2>
             <div class="welcome-message">
                 <p>亲爱的同学们，欢迎访问<span class="highlight">2023届9班</span>的官方网站！</p>
                 <p>这里是我们共同的家园，记录着我们成长的点点滴滴，承载着青春的美好回忆。</p>
                 <p>无论你身在何处，这里永远是我们心灵的港湾，连接着每一位班级成员。</p>
 				<p>让我们一起回忆初一初二的美好时光</p>
-            </div>
-
-            <div class="mobile-hero-details">
-                <p>从训练场到舞台、从比赛到假期，汇聚我们最闪亮的瞬间，留住彼此的努力与欢笑。</p>
-                <div class="hero-meta">
-                    <div class="meta-card">
-                        <strong>400+</strong>
-                        <span>张精选照片</span>
-                        <span>记录2023-2025线下活动</span>
-                    </div>
-                    <div class="meta-card">
-                        <strong>50+</strong>
-                        <span>位同学</span>
-                        <span>活跃于训练、旅行与联欢</span>
-                    </div>
-                    <div class="meta-card">
-                        <strong>5</strong>
-                        <span>个主题专辑</span>
-                        <span>活动 / 体育 / 春游 / 合作</span>
-                    </div>
-                </div>
             </div>
 
             <div class="features">
