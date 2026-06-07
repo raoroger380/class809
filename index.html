@@ -1887,7 +1887,14 @@
 
     <script>
         // ====================== 口令验证功能 ======================
-        const PASSWORD = "809520"; // 设置访问口令
+        const PASSWORD_HASH = "c7091816b36bc1ab8563f4801e877e42177d924726ffbf6e3a5a8202b6670cea"; // SHA-256哈希，非明文
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
         const passwordModal = document.getElementById('passwordModal');
         const passwordInput = document.getElementById('passwordInput');
         const submitPassword = document.getElementById('submitPassword');
@@ -1903,15 +1910,17 @@
         }
         
         // 处理口令提交
-        function handlePasswordSubmit() {
+        async function handlePasswordSubmit() {
             const enteredPassword = passwordInput.value.trim();
-            
+
             if (!enteredPassword) {
                 showError("请输入访问口令");
                 return;
             }
-            
-            if (enteredPassword === PASSWORD) {
+
+            const enteredHash = await sha256(enteredPassword);
+
+            if (enteredHash === PASSWORD_HASH) {
                 // 认证成功
                 sessionStorage.setItem('authenticated', 'true');
                 passwordModal.classList.add('hidden');
@@ -1947,14 +1956,16 @@
         }
         
         // 事件监听
-        submitPassword.addEventListener('click', handlePasswordSubmit);
-        
-        passwordInput.addEventListener('keyup', (e) => {
+        submitPassword.addEventListener('click', async () => {
+            await handlePasswordSubmit();
+        });
+
+        passwordInput.addEventListener('keyup', async (e) => {
             if (e.key === 'Enter') {
-                handlePasswordSubmit();
+                await handlePasswordSubmit();
             }
         });
-        
+
         // 页面加载时检查认证状态
         document.addEventListener('DOMContentLoaded', checkAuthentication);
 		
@@ -2359,7 +2370,4 @@
             
             // 初始化精彩瞬间相册
             renderMomentsAlbums();
-        });
-    </script>
-</body>
-</html>
+ 
