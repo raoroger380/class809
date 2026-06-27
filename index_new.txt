@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>2023届9班 | 班级网站</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&amp;family=Quicksand:wght@400;600;700;800&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{--bg-deep:#080812;--bg:#0d0d24;--bg-card:rgba(255,255,255,.04);--bg-glass:rgba(255,255,255,.06);--surface:rgba(255,255,255,.08);--border:rgba(255,255,255,.08);--border-light:rgba(255,255,255,.15);--text:#f0eeff;--text-soft:#b8b0d8;--text-muted:#7a7298;--primary:#7c5cfc;--primary-glow:rgba(124,92,252,.25);--primary-deep:#5a3fd4;--accent:#f0b860;--accent-glow:rgba(240,184,96,.2);--coral:#ff6b6b;--success:#4cd9a0;--header-h:64px;--radius:16px;--radius-sm:10px;--radius-full:999px;--ease:cubic-bezier(.22,1,.36,1);--ease-bounce:cubic-bezier(.34,1.56,.64,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:Noto Sans SC,-apple-system,sans-serif;background:var(--bg-deep);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden}
+::selection{background:var(--primary);color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg-deep)}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:3px}
+#particles-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(124,92,252,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,252,.04) 1px,transparent 1px);background-size:60px 60px}
+.password-modal{position:fixed;inset:0;z-index:9999;display:flex;justify-content:center;align-items:center;background:rgba(8,8,18,.92);backdrop-filter:blur(20px);transition:opacity .6s var(--ease),visibility .6s}
+.password-modal.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.modal-inner{position:relative;width:90%;max-width:420px;z-index:2;text-align:center;padding:3rem 2.5rem}
+.modal-glow{position:absolute;inset:-80px;z-index:-1;background:radial-gradient(ellipse at center,var(--primary-glow) 0%,transparent 70%);opacity:.6}
+.lock-ring{width:80px;height:80px;margin:0 auto 1.5rem;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;box-shadow:0 0 40px var(--primary-glow);animation:pulse-ring 2s ease-in-out infinite}
+.modal-inner h2{font-size:1.6rem;font-weight:700;margin-bottom:.3rem;background:linear-gradient(135deg,var(--text),var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.modal-inner p{color:var(--text-soft);font-size:.92rem;margin-bottom:2rem}
+.password-form{display:flex;flex-direction:column;gap:.75rem}
+.password-input{width:100%;padding:.85rem 1.25rem;background:var(--bg-glass);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:1rem;color:var(--text);outline:none;text-align:center;transition:border .3s,box-shadow .3s;font-weight:500;letter-spacing:2px}
+.submit-btn{padding:.85rem;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--primary),var(--primary-deep));color:#fff;font-size:1rem;font-weight:600;cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.error-message{color:var(--coral);font-size:.85rem;display:none;text-align:center}
+.modal-shapes span{position:absolute;border-radius:50%;background:var(--primary);opacity:.06;animation:float-shape 8s ease-in-out infinite}
+.glass-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,18,.75);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:transform .4s var(--ease)}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:var(--header-h);padding:0 1.5rem}
+.nav-links{display:flex;gap:.25rem;list-style:none}
+.nav-link{padding:.5rem 1rem;border-radius:var(--radius-full);color:var(--text-soft);text-decoration:none;font-size:.88rem;font-weight:500;transition:all .3s var(--ease);cursor:pointer}
+.nav-link.active{color:#fff;background:linear-gradient(135deg,var(--primary),var(--primary-deep));box-shadow:0 4px 20px var(--primary-glow)}
+.section{display:none;padding:calc(var(--header-h) + 2rem) 1.5rem 4rem;max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.section.active{display:block}
+.section-title{font-size:2.4rem;font-weight:800;margin-bottom:.75rem;line-height:1.2}
+.section-title .gradient{background:linear-gradient(135deg,var(--text),var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.section-sub{color:var(--text-soft);font-size:1.05rem;max-width:600px;line-height:1.7;margin-bottom:2.5rem}
+.hero{min-height:85vh;display:flex;align-items:center;position:relative;padding:2rem 0}
+.hero-content{flex:1;position:relative;z-index:2}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1.15;margin-bottom:1rem}
+.hero p{font-size:1.1rem;color:var(--text-soft);max-width:560px;line-height:1.8;margin-bottom:2rem}
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:var(--radius-full);background:linear-gradient(135deg,var(--primary),var(--primary-deep));color:#fff;text-decoration:none;font-weight:600;font-size:.92rem;border:none;cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:var(--radius-full);background:var(--bg-glass);border:1px solid var(--border);color:var(--text-soft);cursor:pointer;transition:all .3s var(--ease)}
+.hero-visual{flex:0 0 320px;position:relative;display:flex;align-items:center;justify-content:center}
+.hero-visual-inner{width:260px;height:260px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--primary),transparent 70%);position:relative;animation:hero-glow 4s ease-in-out infinite}
+.hero-stat-circles{position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none}
+.hero-stat-circles span{position:absolute;padding:.35rem .7rem;border-radius:var(--radius-full);background:var(--bg-glass);backdrop-filter:blur(8px);border:1px solid var(--border);font-size:.7rem;font-weight:600;color:var(--text);white-space:nowrap;animation:float 6s ease-in-out infinite}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:600px;margin:2.5rem 0}
+.stat-card{padding:1.25rem;border-radius:var(--radius-sm);background:var(--bg-glass);border:1px solid var(--border);text-align:center}
+.stat-num{font-family:Quicksand,sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.stat-label{font-size:.8rem;color:var(--text-muted);margin-top:.25rem}
+.welcome-card{padding:2rem 2.5rem;border-radius:var(--radius);background:var(--bg-glass);border:1px solid var(--border);position:relative;overflow:hidden;margin:3rem 0}
+.welcome-card::before{content:";position:absolute;top:0;right:0;width:300px;height:300px;background:radial-gradient(circle,var(--primary-glow) 0%,transparent 70%);pointer-events:none}
+.welcome-card h3{font-size:1.3rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.welcome-card p{color:var(--text-soft);margin-bottom:.5rem;font-size:.95rem;line-height:1.7}
+.bento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2.5rem 0}
+.bento-card{padding:1.75rem;border-radius:var(--radius);background:var(--bg-glass);border:1px solid var(--border);cursor:default;transition:all .4s var(--ease)}
+.bento-card .icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary-deep));display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#fff;margin-bottom:1rem}
+.bento-card h4{font-size:1rem;font-weight:600;margin-bottom:.4rem}
+.bento-card p{font-size:.85rem;color:var(--text-muted);line-height:1.6}
+.download-panel{padding:2rem 2.5rem;border-radius:var(--radius);background:linear-gradient(135deg,var(--bg-glass),rgba(124,92,252,.08));border:1px solid var(--border);text-align:center;margin-bottom:2.5rem}
+.download-panel::before{content:";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,var(--primary-glow) 0%,transparent 60%);pointer-events:none}
+.download-panel .icon-big{font-size:2.5rem;color:var(--primary);margin-bottom:.75rem;animation:bounce-soft 2s ease-in-out infinite}
+.download-panel h3{font-size:1.25rem;font-weight:700;margin-bottom:.4rem}
+.download-panel p{color:var(--text-soft);font-size:.9rem;margin-bottom:1.25rem}
+.download-links{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center}
+.download-link{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.5rem;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--border);color:var(--text-soft);text-decoration:none;font-weight:500;font-size:.88rem;transition:all .3s var(--ease)}
+test
+.test{color:var(--primary)}
+.test2{border-color:var(--border-light)}
+.test3{background:rgba(8,8,18,.92)}
+.test4{content:"}
+@media(max-width:900px){.hero{flex-direction:column}}
+.contact-toolbar .search-wrap:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow)}
+.contact-table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.contact-table{width:100%;border-collapse:collapse}
+.contact-table th{padding:.85rem 1rem;text-align:left;font-size:.8rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.contact-table td{padding:.7rem 1rem;font-size:.88rem;border-bottom:1px solid var(--border);color:var(--text-soft)}
+.contact-table .name-cell{color:var(--text);font-weight:500}
+.contact-table .actions-cell{display:flex;gap:.35rem}
+.contact-table .actions-cell a{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);text-decoration:none;transition:all .3s;font-size:.8rem}
+.footer{text-align:center;padding:2rem 1.5rem;border-top:1px solid var(--border);position:relative;z-index:1;color:var(--text-muted);font-size:.82rem}
+.footer .love{color:var(--coral)}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<canvas id="particles-canvas"></canvas>
+<div class="password-modal" id="passwordModal">
+  <div class="modal-inner">
+    <div class="modal-glow"></div>
+    <div class="modal-shapes"><span></span><span></span><span></span></div>
+    <div class="lock-ring"><i class="fas fa-lock"></i></div>
+    <h2>班级网站访问授权</h2>
+    <p>请输入访问口令进入澄石中学2023届9班班级网站</p>
+    <div class="password-form">
+      <input type="password" class="password-input" id="passwordInput" placeholder="请输入班级口令" autocomplete="off">
+      <div class="error-message" id="errorMessage"></div>
+      <button class="submit-btn" id="submitPassword"><i class="fas fa-unlock"></i> 进入网站</button>
+    </div>
+  </div>
+</div>
+<header class="glass-header" id="header">
+  <div class="header-inner">
+    <a href="#" class="header-brand"><i class="fas fa-graduation-cap"></i><span>澄石中学 · 2023届9班</span></a>
+    <ul class="nav-links">
+      <li><a href="#" class="nav-link active" data-target="home"><i class="fas fa-home"></i><span>首页</span></a></li>
+      <li><a href="#" class="nav-link" data-target="moments"><i class="fas fa-camera"></i><span>精彩瞬间</span></a></li>
+      <li><a href="#" class="nav-link" data-target="contact"><i class="fas fa-address-book"></i><span>通讯录</span></a></li>
+    </ul>
+  </div>
+</header>
+<section id="home" class="section active">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-star"></i> 澄石中学 · 2023级9班</div>
+      <h1>青春不散场<br><span class="gradient">回忆永留存</span></h1>
+      <p>这里保存着班级的照片、活动和回忆，随时都可以回来翻一翻，看看大家一起走过的时光。</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary nav-link" data-target="moments"><i class="fas fa-images"></i> 浏览相册</a>
+        <a href="#" class="btn-ghost nav-link" data-target="contact"><i class="fas fa-address-book"></i> 查看通讯录</a>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num" data-count="400">0</div><div class="stat-label">精选照片</div></div>
+        <div class="stat-card"><div class="stat-num" data-count="51">0</div><div class="stat-label">班级成员</div></div>
+        <div class="stat-card"><div class="stat-num" data-count="5">0</div><div class="stat-label">主题相册</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-inner">
+        <div class="hero-stat-circles">
+          <span><i class="fas fa-basketball-ball" style="color:var(--accent)"></i> 篮球赛</span>
+          <span><i class="fas fa-running" style="color:var(--success)"></i> 运动会</span>
+          <span><i class="fas fa-plane" style="color:var(--primary)"></i> 春游</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="welcome-card">
+    <h3><i class="fas fa-heart"></i> 欢迎来到我们的班级网站</h3>
+    <p>亲爱的同学们，欢迎访问 <span class="highlight">2023届9班</span> 的官方网站！</p>
+    <p>这里是我们共同的家园，记录着我们成长的点点滴滴，承载着青春的美好回忆。</p>
+    <p>无论你身在何处，这里永远是我们心灵的港湾，连接着每一位班级成员。</p>
+    <p>让我们一起回忆初一初二的美好时光！</p>
+  </div>
+  <div class="bento-grid">
+    <div class="bento-card">
+      <div class="icon"><i class="fas fa-images"></i></div><div class="bento-bg"></div>
+      <h4>精彩瞬间</h4>
+      <p>浏览班级活动精彩照片和视频，重温共同经历的美好时光。</p>
+    </div>
+    <div class="bento-card">
+      <div class="icon"><i class="fas fa-cloud-download-alt"></i></div><div class="bento-bg"></div>
+      <h4>网盘下载</h4>
+      <p>一键下载完整相册集，永久保存班级珍贵回忆。</p>
+    </div>
+    <div class="bento-card">
+      <div class="icon"><i class="fas fa-address-book"></i></div><div class="bento-bg"></div>
+      <h4>通讯录</h4>
+      <p>快速查找同学的联系方式，方便大家保持联系和沟通。</p>
+    </div>
+  </div>
+</section>
+<section id="moments" class="section">
+  <div class="section-label"><i class="fas fa-camera"></i> 班级相册</div>
+  <h2 class="section-title">精彩<span class="gradient">瞬间</span></h2>
+  <p class="section-sub">每一张照片都是时光的标本，记录着我们共同走过的青春岁月。</p>
+  <div class="download-panel">
+    <div class="icon-big"><i class="fas fa-cloud-download-alt"></i></div>
+    <h3>班级照片网盘下载</h3>
+    <p>一键下载所有高清照片，永久保存班级珍贵回忆</p>
+    <div class="download-links">
+      <a href="https://drive.google.com/drive/folders/1wRuT35uq6QvbKud3uF-wuVIYJUGk9KUO?usp=sharing" class="download-link" target="_blank"><i class="fab fa-google-drive"></i> Google 网盘</a>
+      <a href="https://pan.baidu.com/s/1__EzD6QC8xgjoirPj6felw?pwd=7d28" class="download-link" target="_blank"><i class="fab fa-baidu"></i> 百度网盘</a>
+      <a href="https://www.123865.com/s/VE0Kjv-FtKG3" class="download-link" target="_blank"><i class="fas fa-download"></i> 123云盘（推荐）</a>
+    </div>
+    <div class="download-meta">
+      <span><i class="fas fa-file-archive"></i> ZIP格式压缩包</span>
+      <span><i class="fas fa-database"></i> 约450MB</span>
+      <span><i class="fas fa-images"></i> 包含400+高清照片</span>
+    </div>
+  </div>
+  <div class="filters">
+    <button class="filter-btn active" data-category="all">全部</button>
+    <button class="filter-btn" data-category="activity">班级活动</button>
+    <button class="filter-btn" data-category="sports">篮球赛</button>
+    <button class="filter-btn" data-category="trip">运动会</button>
+    <button class="filter-btn" data-category="festival">节日庆典</button>
+  </div>
+  <div class="album-grid" id="albumGrid"></div>
+</section>
+<section id="album-detail" class="section">
+  <div class="detail-header">
+    <button class="back-btn" id="back-to-albums"><i class="fas fa-arrow-left"></i> 返回相册集</button>
+  </div>
+  <h2 class="section-title" id="album-detail-title" style="font-size:1.6rem"></h2>
+  <div class="detail-meta">
+    <span><i class="far fa-calendar"></i> <span id="album-date"></span></span>
+    <span><i class="fas fa-images"></i> <span id="album-count"></span></span>
+  </div>
+  <div class="detail-desc" id="album-description"></div>
+  <div class="media-grid" id="album-media"></div>
+</section>
+<section id="contact" class="section">
+  <div class="section-label"><i class="fas fa-address-book"></i> 班级通讯录</div>
+  <h2 class="section-title">联系<span class="gradient">方式</span></h2>
+  <p class="section-sub">快速查找同学的联系方式，方便大家保持联系和沟通。</p>
+  <div class="contact-toolbar">
+    <div class="search-wrap"><i class="fas fa-search"></i><input type="text" class="search-input" placeholder="搜索姓名 / 学号 / 电话..."></div>
+  </div>
+  <div class="contact-table-wrap">
+    <table class="contact-table">
+      <thead><tr><th>姓名</th><th>学号</th><th>电话</th><th style="width:80px">联系</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-inner">
+    <button class="video-close" id="closeModal"><i class="fas fa-times"></i></button>
+    <video id="modalVideo" controls playsinline></video>
+  </div>
+</div>
+<div class="footer">
+  &copy; 2025 澄石中学2023届9班 &mdash; 青春不散场，回忆永留存 <span class="love">❤</span>
+</div>
+<script>
+const PASSWORD_HASH = "c7091816b36bc1ab8563f4801e877e42177d924726ffbf6e3a5a8202b6670cea";
+const contacts = [{id:1,name:"陈祖言",studentId:"01",phone:"17317538671"},{id:2,name:"邓嘉楹",studentId:"02",phone:"x"},{id:3,name:"邓培基",studentId:"03",phone:"18038623356"},{id:4,name:"邓为凡",studentId:"04",phone:"x"},{id:5,name:"范俊轩",studentId:"05",phone:"18042852842"},{id:6,name:"付子睿",studentId:"06",phone:"x"},{id:7,name:"何瑞开",studentId:"07",phone:"x"},{id:8,name:"洪子杰",studentId:"08",phone:"x"},{id:9,name:"黄子健",studentId:"09",phone:"18948138752"},{id:10,name:"黄栩彬",studentId:"10",phone:"13690787319"},{id:11,name:"简昱桁",studentId:"11",phone:"18125723927"},{id:12,name:"梁耿豪",studentId:"12",phone:"15220977628"},{id:13,name:"梁昊贤",studentId:"13",phone:"x"},{id:14,name:"梁建明",studentId:"14",phone:"18077902825"},{id:15,name:"梁舒然",studentId:"15",phone:"x"},{id:16,name:"梁轩豪",studentId:"16",phone:"13380222615"},{id:17,name:"林峰",studentId:"17",phone:"x"},{id:18,name:"罗万金",studentId:"18",phone:"x"},{id:19,name:"农友结",studentId:"19",phone:"x"},{id:20,name:"饶启焱",studentId:"20",phone:"18934300811"},{id:21,name:"谭钰坤",studentId:"21",phone:"13925936356"},{id:22,name:"涂宇彬",studentId:"22",phone:"x"},{id:23,name:"韦吉涛",studentId:"23",phone:"x"},{id:24,name:"文荣杰",studentId:"24",phone:"18138477231"},{id:25,name:"伍希彤",studentId:"25",phone:"13670697294"},{id:26,name:"肖子轩",studentId:"26",phone:"18128733757"},{id:27,name:"许栩标",studentId:"27",phone:"18923128365(许栩标妈妈的)"},{id:28,name:"张栩铭",studentId:"28",phone:"x"},{id:29,name:"蔡安棋",studentId:"29",phone:"13630171064"},{id:30,name:"陈美琪",studentId:"30",phone:"13380252898"},{id:31,name:"陈沁瑶",studentId:"31",phone:"13516577332"},{id:32,name:"陈车沛",studentId:"32",phone:"x"},{id:33,name:"陈紫萱",studentId:"33",phone:"x"},{id:34,name:"葛澄瑶",studentId:"34",phone:"18024948314"},{id:35,name:"何宝怡",studentId:"35",phone:"15813433632"},{id:36,name:"何珮瑶",studentId:"36",phone:"x"},{id:37,name:"黄渼茜",studentId:"37",phone:"x"},{id:38,name:"梁澄滢",studentId:"38",phone:"x"},{id:39,name:"梁栩嫣",studentId:"39",phone:"x"},{id:40,name:"凌嘉慧",studentId:"40",phone:"x"},{id:41,name:"伦培林",studentId:"41",phone:"x"},{id:42,name:"吕安晴",studentId:"42",phone:"x"},{id:43,name:"王井宜",studentId:"43",phone:"15813685462"},{id:44,name:"王雅凡",studentId:"44",phone:"x"},{id:45,name:"谢安琪",studentId:"45",phone:"x"},{id:46,name:"许绮琳",studentId:"46",phone:"13392264393"},{id:47,name:"张诗韵",studentId:"47",phone:"x"},{id:48,name:"张涵睿",studentId:"48",phone:"17507575152"},{id:49,name:"张子欣",studentId:"49",phone:"x"},{id:50,name:"钟惠梅",studentId:"50",phone:"x"},{id:51,name:"曾嘉仪",studentId:"51",phone:"x"}];
+const momentsAlbums = [
+{id:1,title:"班级篮球赛",cover:"basketballCompition/074.jpg!list1x.jpg",date:"2023年11月15日",category:"sports",description:"记录2025年篮球比赛精彩瞬间，同学们在赛场上奋力拼搏，彰显了协作共进的风貌",media:[{type:"image",url:"basketballCompition/mmexport1749894346694.jpg"},{type:"image",url:"basketballCompition/mmexport1749894346589.jpg"},{type:"image",url:"basketballCompition/mmexport1749894346483.jpg"},{type:"image",url:"basketballCompition/mmexport1749894346380.jpg"},{type:"video",url:"basketballraido/mmexport1749894346762.mp4",thumbnail:"basketballraido/Screenshot_2025_0621_114628.png"},{type:"video",url:"basketballraido/mmexport1749894346972.mp4",thumbnail:"basketballraido/Screenshot_2025_0621_114644.png"},{type:"video",url:"basketballraido/mmexport1749894347401.mp4",thumbnail:"basketballraido/Screenshot_2025_0621_114548.png"},{type:"video",url:"basketballraido/mmexport1749894347552.mp4",thumbnail:"basketballraido/Screenshot_2025_0621_114610.png"},{type:"video",url:"basketballraido/mmexport1749894349860.mp4",thumbnail:"basketballraido/Screenshot_2025_0621_113931.png"}]},
+{id:2,title:"2023冬季运动会",cover:"SportCompition/IMG_20231201_154026.jpg",date:"2024年1月8日",category:"trip",description:"记录2023年冬季运动会的精彩瞬间，同学们在运动场上挥洒汗水，展现了团结拼搏的精神。",media:[{type:"image",url:"SportCompition/mmexport1749893916868.jpg"},{type:"image",url:"SportCompition/mmexport1749893946051.jpg"},{type:"image",url:"SportCompition/mmexport1749893932629.jpg"},{type:"image",url:"SportCompition/mmexport1749893111528.jpg"}]},
+{id:3,title:"春游之旅",cover:"SpringTravel/IMG20240322155429(1).jpg",date:"2024年12月1日",category:"festival",description:"2024年春季学期组织的春游活动。同学们欢聚在一起，其乐融融！！！",media:[{type:"image",url:"SpringTravel/IMG20240322155429(1).jpg"},{type:"image",url:"SpringTravel/IMG20240322112824(1).jpg"},{type:"image",url:"SpringTravel/IMG20240322110940(1).jpg"},{type:"image",url:"SpringTravel/IMG20240322075546(1).jpg"}]},
+{id:4,title:"班级大合照",cover:"total/MTXX_MR20240221_132314017(1).jpg",date:"2025年1月10日",category:"activity",description:"大家一起来比耶！！！",media:[{type:"image",url:"total/MTXX_MH20240308_185556191(1).jpg"},{type:"image",url:"total/mmexport1749894289813.jpg"},{type:"image",url:"total/IMG_20240412_18132411(1).jpg"},{type:"image",url:"total/IMG_20230919_083807.jpg"}]},
+{id:5,title:"武术操",cover:"festival/IMG_20231013_163355.jpg",date:"2025年1月10日",category:"activity",description:"同学们在打武术操。",media:[{type:"image",url:"festival/IMG_20240117_171116.jpg"},{type:"image",url:"festival/IMG20240531173452.jpg"},{type:"image",url:"festival/IMG20240605101039.jpg"},{type:"image",url:"festival/IMG20240605101517.jpg"}]}];
+async function sha256(m){const b=new TextEncoder().encode(m);const h=await crypto.subtle.digest("SHA-256",b);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join(")}
+(function(){if(sessionStorage.getItem("authenticated")==="true"){document.getElementById("passwordModal").classList.add("hidden");document.body.classList.add("authenticated")}})()
+document.getElementById("submitPassword").addEventListener("click",async function(){var i=document.getElementById("passwordInput");var e=document.getElementById("errorMessage");var p=i.value.trim();if(!p){e.textContent="请输入访问口令";e.style.display="block";var t=setTimeout(function(){e.style.display="none"},3000);return}var h=await sha256(p);if(h===PASSWORD_HASH){sessionStorage.setItem("authenticated","true");gsap.to("#passwordModal",{opacity:0,duration:.5,onComplete:function(){document.getElementById("passwordModal").classList.add("hidden");initPage();initParticles()}})}else{e.textContent="口令错误，请重新输入";e.style.display="block";gsap.fromTo("#passwordInput",{x:0},{x:8,duration:.05,repeat:5,yoyo:true,onComplete:function(){i.value=";i.focus()}});setTimeout(function(){e.style.display="none"},3000)}})
+document.getElementById("passwordInput").addEventListener("keyup",function(e){if(e.key==="Enter"){document.getElementById("submitPassword").click()}})
+function initParticles(){var c=document.getElementById("particles-canvas");if(!c)return;var ctx=c.getContext("2d");var w,h,pts=[];function r(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}window.addEventListener("resize",r);r();for(var i=0;i<60;i++){pts.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3})}function d(){ctx.clearRect(0,0,w,h);for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0){p.x=w}if(p.x>w){p.x=0}if(p.y<0){p.y=h}if(p.y>h){p.y=0}ctx.beginPath();ctx.arc(p.x,p.y,1.5,0,Math.PI*2);ctx.fillStyle="rgba(124,92,252,0.4)";ctx.fill()}for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x;var dy=pts[i].y-pts[j].y;var d=Math.sqrt(dx*dx+dy*dy);if(d<150){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle="rgba(124,92,252,"+(0.12*(1-d/150))+")";ctx.lineWidth=0.5;ctx.stroke()}}}requestAnimationFrame(d)}d()}
+document.querySelectorAll(".nav-link").forEach(function(l){l.addEventListener("click",function(e){e.preventDefault();document.querySelectorAll(".nav-link").forEach(function(x){x.classList.remove("active")});this.classList.add("active");var t=this.getAttribute("data-target");document.querySelectorAll(".section").forEach(function(s){s.classList.remove("active")});document.getElementById(t).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});gsap.fromTo("#"+t+">*",{opacity:0,y:20},{opacity:1,y:0,duration:.5,stagger:.06,ease:"power2.out"})})})
+function renderContactList(){var t=document.querySelector(".contact-table tbody");t.innerHTML=";for(var i=0;i<contacts.length;i++){var c=contacts[i];var r=document.createElement("tr");r.innerHTML="<td class=\"name-cell\">"+c.name+"</td><td>"+c.studentId+"</td><td>"+c.phone+"</td><td class=\"actions-cell\"><a href=\"tel:"+c.phone+"\" class=\"call\" title=\"打电话\"><i class=\"fas fa-phone\"></i></a><a href=\"#\" class=\"msg\" title=\"发信息\"><i class=\"fas fa-comment\"></i></a></td>";t.appendChild(r)}}
+var si=document.querySelector(".search-input");if(si){si.addEventListener("input",function(){var q=this.value.toLowerCase();var rows=document.querySelectorAll(".contact-table tbody tr");for(var i=0;i<rows.length;i++){var r=rows[i];var txt=r.cells[0].textContent.toLowerCase()+r.cells[1].textContent.toLowerCase()+r.cells[2].textContent.toLowerCase();r.style.display=txt.indexOf(q)>=0?":"none"}})}
+function renderAlbums(cat){if(typeof cat==="undefined"){cat="all"}var g=document.getElementById("albumGrid");g.innerHTML=";var list=cat==="all"?momentsAlbums:momentsAlbums.filter(function(a){return a.category===cat});for(var i=0;i<list.length;i++){var a=list[i];var hv=false;for(var j=0;j<a.media.length;j++){if(a.media[j].type==="video"){hv=true;break}}var c=document.createElement("div");c.className="album-card";var html="<div class=\"cover-wrap\"><img src=\"+a.cover+"\" alt=\"+a.title+"\" loading=\"lazy\"><div class=\"cover-overlay\"></div>";if(hv){html+="<div class=\"video-badge\"><i class=\"fas fa-video\"></i> 含视频</div>"}html+="</div><div class=\"album-info\"><h3>"+a.title+"</h3><div class=\"album-meta\"><span><i class=\"far fa-calendar\"></i> "+a.date+"</span><span><i class=\"fas fa-images\"></i> "+a.media.length+"个媒体</span></div></div>";c.innerHTML=html;c.addEventListener("click",function(id){return function(){showAlbum(id)}}(a.id));g.appendChild(c)}gsap.fromTo(".album-card",{opacity:0,y:20},{opacity:1,y:0,duration:.5,stagger:.08,ease:"power2.out"})}
+document.querySelectorAll(".filter-btn").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll(".filter-btn").forEach(function(x){x.classList.remove("active")});this.classList.add("active");renderAlbums(this.getAttribute("data-category"))})})
+function showAlbum(id){var a=null;for(var i=0;i<momentsAlbums.length;i++){if(momentsAlbums[i].id===id){a=momentsAlbums[i];break}}if(!a)return;document.getElementById("album-detail-title").textContent=a.title;document.getElementById("album-date").textContent=a.date;document.getElementById("album-count").textContent=a.media.length+" 个媒体";document.getElementById("album-description").textContent=a.description;var mc=document.getElementById("album-media");mc.innerHTML=";for(var i=0;i<a.media.length;i++){var m=a.media[i];var div=document.createElement("div");if(m.type==="image"){div.innerHTML="<div class=\"media-card\"><img src=\"+m.url+"\" alt=\"+a.title+"\" loading=\"lazy\"><div class=\"media-actions\"><a href=\"+m.url+"\" download><i class=\"fas fa-download\"></i> 下载图片</a></div></div>"}else{div.innerHTML="<div class=\"media-card\" data-video=\"+m.url+"\"><img src=\"+m.thumbnail+"\" alt=\"+a.title+"\" loading=\"lazy\"><div class=\"play-overlay\"><i class=\"fas fa-play-circle\"></i></div><div class=\"media-actions\"><button class=\"play-btn\"><i class=\"fas fa-play\"></i> 播放视频</button></div></div>";div.querySelector(".media-card").addEventListener("click",function(url){return function(){playVideo(url)}}(m.url));var pb=div.querySelector(".play-btn");if(pb){pb.addEventListener("click",function(url){return function(e){e.stopPropagation();playVideo(url)}}(m.url))}}mc.appendChild(div)}document.querySelectorAll(".section").forEach(function(s){s.classList.remove("active")});document.getElementById("album-detail").classList.add("active");window.scrollTo({top:0,behavior:"smooth"});gsap.fromTo("#album-detail>*",{opacity:0,y:20},{opacity:1,y:0,duration:.4,stagger:.06,ease:"power2.out"})}
+document.getElementById("back-to-albums").addEventListener("click",function(){document.querySelectorAll(".section").forEach(function(s){s.classList.remove("active")});document.getElementById("moments").classList.add("active");window.scrollTo({top:0,behavior:"smooth"});renderAlbums()})
+function playVideo(url){var m=document.getElementById("videoModal");var v=document.getElementById("modalVideo");m.style.display="flex";gsap.fromTo(".video-modal-inner",{opacity:0,scale:.9},{opacity:1,scale:1,duration:.4,ease:"power3.out"});v.src=url;v.play()}
+document.getElementById("closeModal").addEventListener("click",function(){var v=document.getElementById("modalVideo");v.pause();v.src=";document.getElementById("videoModal").style.display="none"})
+document.getElementById("videoModal").addEventListener("click",function(e){if(e.target===document.getElementById("videoModal")){var v=document.getElementById("modalVideo");v.pause();v.src=";document.getElementById("videoModal").style.display="none"}})
+var lastScroll=0;window.addEventListener("scroll",function(){var cur=window.scrollY;var h=document.getElementById("header");if(cur>150&&cur>lastScroll){h.classList.add("hidden-header")}else{h.classList.remove("hidden-header")}lastScroll=cur})
+function initPage(){renderContactList();renderAlbums();if(typeof gsap!=='undefined'){gsap.registerPlugin(ScrollTrigger);document.querySelectorAll(".stat-num").forEach(function(el){var target=parseInt(el.getAttribute("data-count"));if(!target)return;ScrollTrigger.create({trigger:el,start:"top 85%",onEnter:function(){gsap.to(el,{innerText:target,duration:1.5,ease:"power2.out",snap:{innerText:1},onUpdate:function(){el.textContent=Math.round(parseFloat(el.textContent))||0}})},once:true})});gsap.utils.toArray(".welcome-card,.bento-card,.download-panel,.filters,.album-card,.contact-toolbar").forEach(function(el){ScrollTrigger.create({trigger:el,start:"top 85%",onEnter:function(){gsap.fromTo(el,{opacity:0,y:30},{opacity:1,y:0,duration:.6,ease:"power2.out"})},once:true})});gsap.fromTo(".section.active>*",{opacity:0,y:20},{opacity:1,y:0,duration:.5,stagger:.05,ease:"power2.out"})}}
+if(sessionStorage.getItem("authenticated")==="true"){initPage();initParticles()}
+</script>
+</body>
+</html>
